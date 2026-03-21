@@ -200,8 +200,10 @@ Runs on:
 🔹 Staff Dashboard
 <img width="1600" alt="staffDashboard" src="https://github.com/user-attachments/assets/16e90c25-4e2a-42dc-925b-c58eae4df729" />
 🔹 Student Dashboard
-![StudentDashboard](https://github.com/user-attachments/assets/9bd50838-dfa0-4d1b-81cb-72c64381791b)
+ ![StudentDashboard](https://github.com/user-attachments/assets/42d3a475-3a59-48b0-9ab5-5a3ae07f7e4f)
+
 ---
+
 ## 📌 Future Enhancements
 
 * Pagination & search filters
