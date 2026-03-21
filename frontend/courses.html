@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRMS - Courses</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><i class="fas fa-graduation-cap"></i> SRMS - Courses</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html"><i class="fas fa-chart-line"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="mb-0"><i class="fas fa-book"></i> Courses</h2>
+            <span class="text-muted d-none d-md-inline">Live data from `/courses` API</span>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group col-md-4 mb-2">
+                        <input type="text" id="courseSearchInput" class="form-control" placeholder="Search by code, name or department...">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>ID</th>
+                        <th>Course Name</th>
+                        <th>Course Code</th>
+                        <th>Credits</th>
+                        <th>Department</th>
+                    </tr>
+                </thead>
+                <tbody id="coursesTable">
+                    <tr><td colspan="5" class="text-center">Loading courses...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white py-3 mt-4">
+        <div class="container text-center">
+            <p>&copy; 2024 Student Record Management System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+        let allCourses = [];
+
+        function renderCourses(list) {
+            const tbody = document.getElementById("coursesTable");
+            if (!tbody) return;
+
+            if (!list.length) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No courses found.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = "";
+            list.forEach(c => {
+                const row = `<tr>
+                    <td>${c.courseId || ""}</td>
+                    <td>${c.courseName || "-"}</td>
+                    <td>${c.courseCode || "-"}</td>
+                    <td>${c.credits != null ? c.credits : "-"}</td>
+                    <td>${c.department || "-"}</td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function loadCoursesPage() {
+            checkAuth();
+            apiGet("/courses")
+                .then(data => {
+                    allCourses = Array.isArray(data) ? data : [];
+                    renderCourses(allCourses);
+                })
+                .catch(err => {
+                    console.error(err);
+                    renderCourses([]);
+                });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadCoursesPage();
+
+            const searchInput = document.getElementById("courseSearchInput");
+            if (searchInput) {
+                searchInput.addEventListener("input", e => {
+                    const q = e.target.value.toLowerCase();
+                    const filtered = allCourses.filter(c => {
+                        const name = (c.courseName || "").toLowerCase();
+                        const code = (c.courseCode || "").toLowerCase();
+                        const dept = (c.department || "").toLowerCase();
+                        return name.includes(q) || code.includes(q) || dept.includes(q);
+                    });
+                    renderCourses(filtered);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
