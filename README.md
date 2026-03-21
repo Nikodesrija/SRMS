@@ -185,22 +185,22 @@ Runs on:
 
 ## 📸 Screenshots
 🔹 Home Page
-![Homepage](https://github.com/user-attachments/assets/12f588a8-6391-4fbd-9877-1a6ce69a441e)
+<img width="1600" height="566" alt="image" src="https://github.com/user-attachments/assets/aa235ac7-77cd-453a-8d3b-d6467a86c18f" />
 🔹 Admin Dashboard
 <img width="1600" src="https://github.com/user-attachments/assets/c080bd4d-ca19-4701-bce7-66abd0276996"/>
 🔹 Admin Operations on Student
 ➕ Add Student
 <table> <tr> <td> <img width="800" src="https://github.com/user-attachments/assets/63ad046e-b2fc-416a-ba69-6b1c29f6f63b"/> </td> <td> <img width="800" src="https://github.com/user-attachments/assets/637df4bc-9e79-4a08-81fa-05668698ae73"/> </td> </tr> </table>
 ✏️ Update Student
-<table> <tr> <td> <img width="800" src="https://github.com/user-attachments/assets/07dcccf9-d7dd-415a-873e-895f113fa96e"/> </td> <td> <img width="800" src="https://github.com/user-attachments/assets/c1936a19-64e4-4a82-9006-d88679cba8b5"/> </td> </tr> </table>
+<table> <tr> <td> <img width="800" src="https://github.com/user-attachments/assets/07dcccf9-d7dd-415a-873e-895f113fa96e"/> </td> <td> <img width="900" src="https://github.com/user-attachments/assets/c1936a19-64e4-4a82-9006-d88679cba8b5"/> </td> </tr> </table>
 ❌ Delete Student
-<table> <tr> <td> <img width="800" src="https://github.com/user-attachments/assets/d42bbc86-642a-462a-be65-fd169c7b0bf5"/> </td> <td> <img width="800" src="https://github.com/user-attachments/assets/a228d3e8-da81-410f-8bcb-c2ca6e8609b8"/> </td> </tr> </table>
+<table> <tr> <td> <img width="800" src="https://github.com/user-attachments/assets/d42bbc86-642a-462a-be65-fd169c7b0bf5"/> </td> <td> <img width="900" src="https://github.com/user-attachments/assets/a228d3e8-da81-410f-8bcb-c2ca6e8609b8"/> </td> </tr> </table>
 🔍 Search Student
 <img width="1600" src="https://github.com/user-attachments/assets/45f67524-e3ac-486a-9a52-f5526264526b"/>
 🔹 Staff Dashboard
 <img width="1600" alt="staffDashboard" src="https://github.com/user-attachments/assets/16e90c25-4e2a-42dc-925b-c58eae4df729" />
 🔹 Student Dashboard
- <img width="1600"alt="image" src="https://github.com/user-attachments/assets/9f3cef6a-3235-44b9-b91f-d91bc3875e86" />
+ <img width="1500" height="542" alt="image" src="https://github.com/user-attachments/assets/9f3cef6a-3235-44b9-b91f-d91bc3875e86" />
 
 ## 📌 Future Enhancements
 
