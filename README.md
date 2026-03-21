@@ -200,8 +200,7 @@ Runs on:
 🔹 Staff Dashboard
 <img width="1600" alt="staffDashboard" src="https://github.com/user-attachments/assets/16e90c25-4e2a-42dc-925b-c58eae4df729" />
 🔹 Student Dashboard
- <img width="1600" alt="image" src="https://github.com/user-attachments/assets/9f3cef6a-3235-44b9-b91f-d91bc3875e86" />
----
+ <img width="1600"alt="image" src="https://github.com/user-attachments/assets/9f3cef6a-3235-44b9-b91f-d91bc3875e86" />
 
 ## 📌 Future Enhancements
 
