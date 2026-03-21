@@ -19,7 +19,6 @@ public class AuthController {
         this.service = service;
     }
 
-    // Keep legacy format: body = "username,password"
     @PostMapping(consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Object> login(@RequestBody(required = false) String body) {
         if (body == null) body = "";
