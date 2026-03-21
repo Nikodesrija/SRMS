@@ -8,16 +8,13 @@ function handleLogin(event) {
     const loadingSpinner = document.getElementById("loadingSpinner");
     const errorMessage = document.getElementById("errorMessage");
 
-    // Show loading state
     loginBtn.style.display = 'none';
     loadingSpinner.classList.remove('d-none');
     errorMessage.classList.add('d-none');
 
     fetch("http://localhost:8080/auth", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: username + "," + password
     })
     .then(async res => {
@@ -30,46 +27,27 @@ function handleLogin(event) {
     })
     .then(data => {
         if (data.success) {
-            // Store user info in localStorage
             localStorage.setItem("token", data.token);
             localStorage.setItem("username", data.username);
             localStorage.setItem("role", data.role);
-
-            // Redirect based on role
             redirectUserByRole(data.role);
         } else {
-            showError(data.message || "Login failed. Please check your credentials.");
+            showError(data.message || "Login failed");
             resetLoginForm();
         }
     })
     .catch(error => {
         console.error("Login error:", error);
-        showError(error.message || "An error occurred. Please try again.");
+        showError("Server error");
         resetLoginForm();
     });
 }
 
 function applyLoginPageContext() {
     const titleEl = document.getElementById("loginTitle");
-    const subtitleEl = document.getElementById("loginSubtitle");
+    if (!titleEl) return;
 
-    if (!titleEl) return; // not on login page
-
-    const params = new URLSearchParams(window.location.search || "");
-    const roleParam = (params.get("role") || "").toLowerCase().trim();
-    const allowed = new Set(["student", "staff", "admin"]);
-
-    let role = allowed.has(roleParam)
-        ? roleParam
-        : (localStorage.getItem("loginRole") || "").toLowerCase().trim();
-
-    if (!allowed.has(role)) role = "";
-    if (role) localStorage.setItem("loginRole", role);
-
-    const roleLabel = role ? role.charAt(0).toUpperCase() + role.slice(1) : "SRMS";
-    titleEl.textContent = role ? `${roleLabel} Login` : "SRMS Login";
-    if (subtitleEl) subtitleEl.textContent = "Student Record Management System";
-    document.title = role ? `${roleLabel} Login - SRMS` : "SRMS - Login";
+    document.title = "SRMS - Login";
 }
 
 function redirectUserByRole(role) {
@@ -95,25 +73,19 @@ function showError(message) {
 }
 
 function resetLoginForm() {
-    const loginBtn = document.getElementById("loginBtn");
-    const loadingSpinner = document.getElementById("loadingSpinner");
-
-    loginBtn.style.display = 'block';
-    loadingSpinner.classList.add('d-none');
+    document.getElementById("loginBtn").style.display = 'block';
+    document.getElementById("loadingSpinner").classList.add('d-none');
 }
 
 function logout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    localStorage.removeItem("role");
+    localStorage.clear();
     window.location.href = "index.html";
 }
 
 function checkAuth() {
     const token = localStorage.getItem("token");
-    if (!token) {
-        window.location.href = "login.html";
-    }
+    if (!token) window.location.href = "login.html";
+
     return {
         username: localStorage.getItem("username"),
         role: localStorage.getItem("role"),
@@ -121,51 +93,63 @@ function checkAuth() {
     };
 }
 
+/* ✅ FIXED FUNCTION */
 function updateUserInfo() {
     const username = localStorage.getItem("username");
-    const role = localStorage.getItem("role");
-    
+    const role = (localStorage.getItem("role") || "").toLowerCase();
     const userDisplay = document.getElementById("userDisplay");
-    const roleDisplay = document.getElementById("roleDisplay");
-    
-    if (userDisplay) userDisplay.textContent = username || "User";
-    if (roleDisplay) roleDisplay.textContent = role || "User";
+
+    if (!userDisplay) return;
+
+    if (role === "staff") {
+        apiGet("/staff?username=" + encodeURIComponent(username))
+        .then(res => {
+            const data = res.data || res;
+            const fullName = ((data.firstName || "") + " " + (data.lastName || "")).trim();
+            userDisplay.textContent = fullName || username;
+        })
+        .catch(() => userDisplay.textContent = username);
+    }
+
+    else if (role === "student") {
+        apiGet("/students?username=" + encodeURIComponent(username))
+        .then(res => {
+            const data = res.data || res;
+            const fullName = ((data.firstName || "") + " " + (data.lastName || "")).trim();
+            userDisplay.textContent = fullName || username;
+        })
+        .catch(() => userDisplay.textContent = username);
+    }
+
+    else {
+        userDisplay.textContent = username || "User";
+    }
 }
 
 function showProfile() {
-    const username = localStorage.getItem("username") || "User";
-    const role = (localStorage.getItem("role") || "Unknown Role").toLowerCase();
+    const username = localStorage.getItem("username");
+    const role = (localStorage.getItem("role") || "").toLowerCase();
 
-    if (!username) {
-        alert("No user information available.");
-        return;
-    }
-
-    let endpoint;
-    if (role === "staff") {
-        endpoint = "/staff?username=" + encodeURIComponent(username);
-    } else if (role === "student") {
-        endpoint = "/students?username=" + encodeURIComponent(username);
-    } else {
-        alert(`Profile\nUsername: ${username}\nRole: ${role}`);
-        return;
-    }
+    let endpoint = role === "staff"
+        ? "/staff?username=" + username
+        : "/students?username=" + username;
 
     apiGet(endpoint)
-        .then(res => {
-            const data = res.data || res;
-            if (!data) {
-                alert(`Profile\nUsername: ${username}\nRole: ${role}`);
-                return;
-            }
-            const fullName = `${data.firstName || ""} ${data.lastName || ""}`.trim() || "(Name not set)";
-            const email = data.email || "N/A";
-            const dept = data.department || "N/A";
-            alert(`Profile\nName: ${fullName}\nUsername: ${username}\nEmail: ${email}\nDepartment: ${dept}\nRole: ${role}`);
-        })
-        .catch(() => {
-            alert(`Profile\nUsername: ${username}\nRole: ${role}`);
-        });
+    .then(res => {
+        const data = res.data || res;
+
+        alert(`👤 Profile
+Name: ${data.firstName} ${data.lastName}
+Email: ${data.email}
+Department: ${data.department}
+Username: ${username}
+Role: ${role}`);
+    })
+    .catch(() => alert("Failed to load profile"));
 }
 
-document.addEventListener("DOMContentLoaded", applyLoginPageContext);
+/* ✅ LOAD */
+document.addEventListener("DOMContentLoaded", function () {
+    applyLoginPageContext();
+    updateUserInfo();
+});
