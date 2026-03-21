@@ -185,9 +185,9 @@ Runs on:
 
 ## 📸 Screenshots
 🔹 Home Page
-<img width="1600" height="566" alt="image" src="https://github.com/user-attachments/assets/aa235ac7-77cd-453a-8d3b-d6467a86c18f" />
+<img width="1500" height="566" alt="image" src="https://github.com/user-attachments/assets/aa235ac7-77cd-453a-8d3b-d6467a86c18f" />
 🔹 Admin Dashboard
-<img width="1600" src="https://github.com/user-attachments/assets/c080bd4d-ca19-4701-bce7-66abd0276996"/>
+<img width="1500" height="566" src="https://github.com/user-attachments/assets/c080bd4d-ca19-4701-bce7-66abd0276996"/>
 🔹 Admin Operations on Student
 ➕ Add Student
 <table> <tr> <td> <img width="800" src="https://github.com/user-attachments/assets/63ad046e-b2fc-416a-ba69-6b1c29f6f63b"/> </td> <td> <img width="800" src="https://github.com/user-attachments/assets/637df4bc-9e79-4a08-81fa-05668698ae73"/> </td> </tr> </table>
@@ -200,7 +200,7 @@ Runs on:
 🔹 Staff Dashboard
 <img width="1600" alt="staffDashboard" src="https://github.com/user-attachments/assets/16e90c25-4e2a-42dc-925b-c58eae4df729" />
 🔹 Student Dashboard
- <img width="1500" height="542" alt="image" src="https://github.com/user-attachments/assets/9f3cef6a-3235-44b9-b91f-d91bc3875e86" />
+ <img width="1500" height="566" alt="image" src="https://github.com/user-attachments/assets/9f3cef6a-3235-44b9-b91f-d91bc3875e86" />
 
 ## 📌 Future Enhancements
 
